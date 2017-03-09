@@ -6,4 +6,4 @@ document.addEventListener "DOMContentLoaded", ->
       name = "view-nr#{i}"
       window.customElements.define name, view
       document.body.appendChild document.createElement(name)
-  setTimeout window.__karma__.start, 10
+  setTimeout window.__karma__.start, 100
