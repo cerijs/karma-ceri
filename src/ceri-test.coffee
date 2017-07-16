@@ -10,6 +10,6 @@ window.ceriTest = (ce) ->
       describe hyphenate(k), ->
         before (done) -> 
           document.body.appendChild el
-          el.$nextTick -> el.$nextTick done
+          el.$nextTick -> el.$nextTick -> el.$nextTick done
         after -> el.remove()
         v.call(el,el)
