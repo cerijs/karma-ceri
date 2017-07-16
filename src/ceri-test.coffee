@@ -1,9 +1,15 @@
 require("document-register-element/pony")(global,'force')
-window.__karma__.loaded = ->
-document.addEventListener "DOMContentLoaded", ->
-  if window.ceri?.tests?
-    for view,i in window.ceri.tests
-      name = "view-nr#{i}"
-      window.customElements.define name, view
-      document.body.appendChild document.createElement(name)
-  setTimeout window.__karma__.start, 100
+i = 0
+hyphenate = (str) -> str.replace(/([^-])([A-Z])/g, '$1-$2').toLowerCase()
+window.ceriTest = (ce) ->
+  if ce.prototype.tests?
+    name = "view-nr#{i++}"
+    window.customElements.define name, ce
+    el = document.createElement(name)
+    for k,v of el.tests
+      describe hyphenate(k), ->
+        before (done) -> 
+          document.body.appendChild el
+          el.$nextTick -> el.$nextTick done
+        after -> el.remove()
+        v.call(el,el)
